@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-console.log(process.env.REACT_APP_UNSPLASH_ACCESS_KEY)
 export default axios.create({
   baseURL: 'https://api.unsplash.com',
   headers: {
