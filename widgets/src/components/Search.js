@@ -1,7 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Search = () => {
   const [term, setTerm] = useState('')
+
+  useEffect(() => {
+    console.log('I Only run once')
+  }, [])
+  // [] -> Run at initial render only
+  // no args -> + run after every rerender
+  // [vars] -> + run after every rerender if data has changed
 
   return (
     <div>
