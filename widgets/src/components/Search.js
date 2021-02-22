@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const Search = () => {
-  const [term, setTerm] = useState('programming')
+  const [term, setTerm] = useState('')
   const [results, setResults] = useState([])
 
   useEffect(() => {
@@ -19,7 +19,13 @@ const Search = () => {
       setResults(data.query.search)
     }
 
-    search()
+    if (term) {
+      const timeoutId = setTimeout(() => {
+        search()
+      }, 500)
+
+      return () => clearTimeout(timeoutId)
+    }
   }, [term])
   // [] -> Run at initial render only
   // no args -> + run after every rerender
