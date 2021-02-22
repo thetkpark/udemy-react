@@ -2,8 +2,20 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const Search = () => {
-  const [term, setTerm] = useState('')
+  const [term, setTerm] = useState('programming')
   const [results, setResults] = useState([])
+  const [debouncedTerm, setDebouncedTerm] = useState(term)
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(term)
+    }, 1000)
+    return () => clearTimeout(timerId)
+  }, [term])
+
+  // [] -> Run at initial render only
+  // no args -> + run after every rerender
+  // [vars] -> + run after every rerender if data has changed
 
   useEffect(() => {
     const search = async () => {
@@ -13,23 +25,14 @@ const Search = () => {
           list: 'search',
           origin: '*',
           format: 'json',
-          srsearch: term
+          srsearch: debouncedTerm
         }
       })
       setResults(data.query.search)
     }
 
-    if (term) {
-      const timeoutId = setTimeout(() => {
-        search()
-      }, 500)
-
-      return () => clearTimeout(timeoutId)
-    }
-  }, [term])
-  // [] -> Run at initial render only
-  // no args -> + run after every rerender
-  // [vars] -> + run after every rerender if data has changed
+    search()
+  }, [debouncedTerm])
 
   const rederedResults = results.map(result => {
     return (
