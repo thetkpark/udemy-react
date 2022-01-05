@@ -6,6 +6,6 @@ export const fetchPosts = () => async dispatch => {
   // need to call dispatch manually with action
   dispatch({
     type: 'FETCH_POSTS',
-    payload: res
+    payload: res.data
   })
 }
