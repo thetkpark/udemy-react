@@ -3,9 +3,12 @@ import jsonPlaceholder from '../apis/jsonPlaceholder'
 
 export const fetchPostsAndUsers = () => async (dispatch, getState) => {
   await dispatch(fetchPosts()) // wait for fetchPost action creator to finish and dispatch the result
-  const userIds = _.map(getState().posts, 'userId') // get all userIds from posts
-  const uniqueUserIds = _.uniq(userIds) // get unique userIds
-  uniqueUserIds.forEach(id => dispatch(fetchUser(id))) // dispatch fetchUser action creator for each unique userId
+
+  _.chain(getState().posts) //chain lodash operations
+    .map('userId') // get all userIds from posts
+    .uniq() // get unique userIds
+    .forEach(id => dispatch(fetchUser(id))) // dispatch fetchUser action creator for each unique userId
+    .value() // execute all chained operations
 }
 
 export const fetchPosts = () => async dispatch => {
