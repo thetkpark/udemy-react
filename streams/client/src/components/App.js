@@ -4,11 +4,14 @@ import StreamEdit from "./streams/StreamEdit"
 import StreamDelete from "./streams/StreamDelete"
 import StreamList from "./streams/StreamList"
 import StreamShow from "./streams/StreamShow"
+import Header from "./Header"
+import React from "react"
 
 const App = () => {
 	return (
-		<div>
+		<div className="ui container">
 			<BrowserRouter>
+				<Header />
 				<Routes>
 					<Route path="/" element={<StreamList />} />
 					<Route path="/streams/new" element={<StreamCreate />} />
