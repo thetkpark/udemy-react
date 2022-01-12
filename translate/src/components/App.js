@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import UserCreate from './UserCreate'
+import LanguageContext from '../contexts/LanguageContext'
 
 const App = () => {
   const [language, setLanguage] = useState('english')
@@ -15,9 +16,13 @@ const App = () => {
         <i className="flag us" onClick={() => onLanguageChange('english')} />
         <i className="flag nl" onClick={() => onLanguageChange('dutch')} />
       </div>
-      <UserCreate />
+      <LanguageContext.Provider value={language}>
+        <UserCreate />
+      </LanguageContext.Provider>
     </div>
   )
 }
+
+// Use provider to wrap the components that use the context and pass the value
 
 export default App
