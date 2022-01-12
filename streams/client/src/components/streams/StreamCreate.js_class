@@ -1,24 +1,21 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { createStream } from '../../actions'
 
-const StreamCreate = props => {
-  const navigate = useNavigate()
-
-  const renderInput = ({ input, label, meta }) => {
+class StreamCreate extends React.Component {
+  renderInput = ({ input, label, meta }) => {
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`
     return (
       <div className={className}>
         <label>{label}</label>
         <input {...input} />
-        {renderError(meta)}
+        {this.renderError(meta)}
       </div>
     )
   }
 
-  const renderError = ({ error, touched }) => {
+  renderError({ error, touched }) {
     if (touched && error) {
       return (
         <div className="ui error message">
@@ -28,21 +25,23 @@ const StreamCreate = props => {
     }
   }
 
-  const onSubmit = async formValues => {
-    const res = await props.createStream(formValues)
-    if (res.status === 201) {
-      navigate('/')
-    }
+  onSubmit = formValues => {
+    this.props.createStream(formValues)
   }
 
-  console.log('redender')
-  return (
-    <form className="ui form error" onSubmit={props.handleSubmit(onSubmit)}>
-      <Field name="title" component={renderInput} label="Enter Title" />
-      <Field name="description" component={renderInput} label="Enter Description" />
-      <button className="ui button primary">Submit</button>
-    </form>
-  )
+  render() {
+    return (
+      <form className="ui form error" onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <Field name="title" component={this.renderInput} label="Enter Title" />
+        <Field
+          name="description"
+          component={this.renderInput}
+          label="Enter Description"
+        />
+        <button className="ui button primary">Submit</button>
+      </form>
+    )
+  }
 }
 
 const validate = formValues => {

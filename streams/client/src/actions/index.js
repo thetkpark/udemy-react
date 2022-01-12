@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import streams from '../api/streams'
 import {
   SIGN_IN,
@@ -26,6 +27,7 @@ export const createStream = formValues => async (dispatch, getState) => {
   const { userId } = getState().auth
   const res = await streams.post('/streams', { ...formValues, userId })
   dispatch({ type: CREATE_STREAM, payload: res.data })
+  return res
 }
 
 export const fetchStreams = () => async dispatch => {
