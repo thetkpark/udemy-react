@@ -24,5 +24,7 @@ const App = () => {
 }
 
 // Use provider to wrap the components that use the context and pass the value
+// Value that passed to provider is the value of the context
+// Providers are independent of each other (Even it is the same context)
 
 export default App
